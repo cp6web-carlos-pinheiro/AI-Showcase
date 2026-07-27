@@ -1,4 +1,4 @@
-/* Reset and Base Styles */
+/* ====================== RESET & BASE ====================== */
 * {
     margin: 0;
     padding: 0;
@@ -21,13 +21,14 @@ body {
 
 /* ====================== HEADER ====================== */
 header {
-    background-color: #ffffff;
-    border-bottom: 1px solid #eeeeee;
+    background: linear-gradient(135deg, #ffffff 0%, #d0fce6 100%);
+    border-bottom: 1px solid #e8f0ec;
     padding: 18px 0;
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
+    backdrop-filter: blur(8px);
 }
 
 .header-container {
@@ -74,12 +75,19 @@ header {
     transform: translateY(-3px);
 }
 
+/* Large Button (CTA) */
+.btn-large {
+    padding: 18px 56px;
+    font-size: 18px;
+}
+
 /* ====================== HERO ====================== */
 .hero {
     min-height: 90vh;
     display: flex;
     align-items: center;
     padding-top: 90px;
+    background: linear-gradient(180deg, #b1fcd7 0%, #ffffff 100%);
 }
 
 .hero-content {
@@ -100,6 +108,7 @@ header {
     line-height: 1.2;
     font-weight: 700;
     color: #1a1a1a;
+    margin-top: 2rem;
 }
 
 /* Center - Phone Mockup */
@@ -143,24 +152,116 @@ header {
     min-width: 50px;
 }
 
+/* ====================== FEATURES SECTION ====================== */
+.features {
+    padding: 100px 0;
+    background-color: #fafafa;
+}
+
+.feature-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 100px;
+    text-align: center;
+}
+
+.feature-row:last-child {
+    margin-bottom: 0;
+}
+
+.feature-image {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.feature-phone {
+    max-height: 480px;
+    border: 12px solid #111;
+    border-radius: 40px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+}
+
+.feature-text {
+    flex: 1;
+    max-width: 480px;
+}
+
+.feature-text h2 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+}
+
+.feature-text p {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.7;
+}
+
+/* ====================== CTA SECTION ====================== */
+.cta {
+    padding-bottom: 100px;
+    background-color: #ffffff;
+    text-align: center;
+}
+
+.cta-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+}
+
+.cta h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.cta-highlight {
+    font-size: 1.2rem;
+    color: #0a3d2a;
+    font-weight: 500;
+}
+
+/* ====================== FOOTER ====================== */
+footer {
+    background-color: #0a3d2a;
+    color: white;
+    padding: 30px 0;
+    text-align: center;
+}
+
+footer p {
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
 /* ====================== DESKTOP ====================== */
 @media (min-width: 768px) {
+
+    /* Hero */
     .hero-content {
         flex-direction: row;
         text-align: left;
         gap: 40px;
         align-items: center;
-        justify-content: center;         
+        justify-content: center;
     }
 
     .hero-left,
     .hero-center,
     .hero-right {
-        flex: 1;                         
+        flex: 1;
     }
 
     .hero-left h1 {
         font-size: 2.75rem;
+        margin-top: 0;
     }
 
     .hero-center {
@@ -170,6 +271,39 @@ header {
     .hero-right {
         text-align: left;
         max-width: none;
+    }    
+
+    /* Features */
+    .feature-row {
+        flex-direction: row;
+        text-align: left;
+        gap: 60px;
     }
-    
+
+    .feature-row.reverse {
+        flex-direction: row-reverse;
+    }
+
+    .feature-text h2 {
+        font-size: 2.1rem;
+    }
+}
+
+/* Large Screens */
+@media (min-width: 1024px) {
+    .hero-left h1 {
+        font-size: 3rem;
+    }
+
+    .phone-mockup {
+        max-height: 620px;
+    }
+
+    .feature-phone {
+        max-height: 540px;
+    }
+
+    .cta h2 {
+        font-size: 2.5rem;
+    }
 }

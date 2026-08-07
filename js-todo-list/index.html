@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tasks — Simple To-Do List</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="app-header">
+      <h1>Tasks</h1>
+      <p class="app-subtitle">Keep track of what needs doing.</p>
+    </header>
+
+    <section class="card task-input-card" aria-label="Add a new task">
+      <form id="task-form" class="task-form">
+        <label for="task-input" class="visually-hidden">New task</label>
+        <input
+          type="text"
+          id="task-input"
+          name="task"
+          class="task-input"
+          placeholder="Add a new task…"
+          autocomplete="off"
+          required
+        />
+        <button type="submit" class="btn btn-primary">Add</button>
+      </form>
+    </section>
+
+    <section class="card task-list-card" aria-label="Task list">
+      <div class="task-list-header">
+        <h2>My Tasks</h2>
+        <span id="task-progress" class="task-progress"></span>
+      </div>
+
+      <ul id="task-list" class="task-list" hidden></ul>
+
+      <p id="empty-state" class="empty-state">
+        No tasks yet — add one above to get started.
+      </p>
+    </section>
+  </main>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,210 @@
+:root {
+  --color-bg: #0a0d12;
+  --color-card: #1a1f28;
+  --color-card-border: #2b323e;
+  --color-text: #e6e9ef;
+  --color-text-muted: #9099a8;
+  --color-accent: #e3b341;   /* gold — GitHub's star color */
+  --color-link: #6ea8fe;
+  --color-error: #f06a6a;
+
+  --radius: 12px;
+  --font-ui: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  line-height: 1.5;
+}
+
+.page {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 48px 20px 80px;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.card {
+  background: var(--color-card);
+  border: 1px solid var(--color-card-border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.search-card {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-card-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  font-size: 1rem;
+  padding: 12px 14px;
+}
+
+.search-input:focus {
+  outline: 2px solid var(--color-link);
+  outline-offset: 1px;
+}
+
+.search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.results-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Mensagens de estado (hint, loading, empty, erro) */
+.hint-message,
+.empty-message,
+.error-message,
+.loading-message {
+  margin: 0;
+  padding: 8px 0;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.error-message {
+  color: var(--color-error);
+}
+
+.loading-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-card-border);
+  border-top-color: var(--color-link);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
+
+/* Item de repositório */
+.repo-item {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.repo-item:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.repo-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 6px;
+}
+
+.repo-main {
+  min-width: 0;
+}
+
+.repo-header {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.repo-author {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.repo-name {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--color-link);
+  text-decoration: none;
+  word-break: break-word;
+}
+
+.repo-name:hover {
+  text-decoration: underline;
+}
+
+.repo-description {
+  margin: 6px 0 8px;
+  color: var(--color-text);
+  font-size: 0.95rem;
+}
+
+.repo-meta {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+}
+
+.repo-language {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+}
+
+.language-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.repo-stars {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--color-accent);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

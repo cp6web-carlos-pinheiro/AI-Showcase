@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub Repository Search</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+  <main class="page">
+
+    <h1 class="page-title">GitHub Repository Search</h1>
+
+    <section class="card search-card">
+      <label for="search-input" class="visually-hidden">Search repositories</label>
+      <input
+        type="text"
+        id="search-input"
+        class="search-input"
+        placeholder="Type a term and press Enter…"
+        autocomplete="off"
+      />
+    </section>
+
+    <section class="card results-card" id="results-card">
+      <div id="results-content" class="results-content">
+        <p class="hint-message">Type something above and press Enter to search for repositories.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="assets/js/script.js" defer></script>
+</body>
+</html>

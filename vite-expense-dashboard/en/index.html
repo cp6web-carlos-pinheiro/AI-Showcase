@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense dashboard</title>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="summary" aria-label="Expense summary">
+        <p class="summary__brand">Expense dashboard</p>
+
+        <p class="summary__label" id="total-label">Total spent</p>
+        <p class="summary__total" id="total-amount" aria-labelledby="total-label"></p>
+
+        <div class="bar" id="category-bar" role="img" aria-label="Spending breakdown by category"></div>
+
+        <ul class="summary__categories" id="category-list"></ul>
+      </aside>
+
+      <main class="content">
+        <section class="card" aria-labelledby="new-expense-title">
+          <h2 class="card__title" id="new-expense-title">New expense</h2>
+
+          <form class="form" id="expense-form" novalidate>
+            <div class="field field--title">
+              <label for="title-field">Title</label>
+              <input id="title-field" name="title" type="text" autocomplete="off" placeholder="e.g. Lunch with the team" />
+            </div>
+
+            <div class="field field--amount">
+              <label for="amount-field">Amount ($)</label>
+              <input id="amount-field" name="amount" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0.00" />
+            </div>
+
+            <div class="field field--category">
+              <label for="category-field">Category</label>
+              <select id="category-field" name="category"></select>
+            </div>
+
+            <button class="button" type="submit">Add expense</button>
+            <p class="form__error" id="error-message" role="alert"></p>
+          </form>
+        </section>
+
+        <section class="list" aria-labelledby="list-title">
+          <h2 class="list__title" id="list-title">Expenses</h2>
+          <p class="list__empty" id="empty-message">No expenses yet. Fill in the form above to add the first one.</p>
+          <ul class="list__items" id="expense-list"></ul>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

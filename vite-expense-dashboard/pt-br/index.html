@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Painel de despesas</title>
+  </head>
+  <body>
+    <div class="app">
+      <aside class="resumo" aria-label="Resumo das despesas">
+        <p class="resumo__marca">Painel de despesas</p>
+
+        <p class="resumo__rotulo" id="rotulo-total">Total gasto</p>
+        <p class="resumo__total" id="total-geral" aria-labelledby="rotulo-total"></p>
+
+        <div class="barra" id="barra-categorias" role="img" aria-label="Distribuição do gasto por categoria"></div>
+
+        <ul class="resumo__categorias" id="lista-categorias"></ul>
+      </aside>
+
+      <main class="conteudo">
+        <section class="cartao" aria-labelledby="titulo-nova-despesa">
+          <h2 class="cartao__titulo" id="titulo-nova-despesa">Nova despesa</h2>
+
+          <form class="formulario" id="form-despesa" novalidate>
+            <div class="campo campo--titulo">
+              <label for="campo-titulo">Título</label>
+              <input id="campo-titulo" name="titulo" type="text" autocomplete="off" placeholder="Ex.: Almoço com a equipe" />
+            </div>
+
+            <div class="campo campo--valor">
+              <label for="campo-valor">Valor (R$)</label>
+              <input id="campo-valor" name="valor" type="number" inputmode="decimal" step="0.01" min="0" placeholder="0,00" />
+            </div>
+
+            <div class="campo campo--categoria">
+              <label for="campo-categoria">Categoria</label>
+              <select id="campo-categoria" name="categoria"></select>
+            </div>
+
+            <button class="botao" type="submit">Adicionar despesa</button>
+            <p class="formulario__erro" id="mensagem-erro" role="alert"></p>
+          </form>
+        </section>
+
+        <section class="lista" aria-labelledby="titulo-lista">
+          <h2 class="lista__titulo" id="titulo-lista">Despesas</h2>
+          <p class="lista__vazia" id="mensagem-vazia">Nenhuma despesa ainda. Preencha o formulário acima para adicionar a primeira.</p>
+          <ul class="lista__itens" id="lista-despesas"></ul>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

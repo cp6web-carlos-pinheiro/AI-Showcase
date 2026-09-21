@@ -1,0 +1,340 @@
+/* ------------------------------------------------------------------------
+   Base
+   ------------------------------------------------------------------------ */
+
+:root {
+  --papel: #f1f3f2;
+  --superficie: #ffffff;
+  --texto: #17222b;
+  --texto-suave: #5b6a73;
+  --linha: #d8dedc;
+
+  --lateral: #123540;
+  --lateral-texto: #eaf2f1;
+  --lateral-suave: #9db6b8;
+  --lateral-linha: #24505c;
+
+  --foco: #4c9be8;
+
+  --fonte: "Instrument Sans Variable", system-ui, sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--texto);
+  font-family: var(--fonte);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h2,
+p,
+ul {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Cor de cada categoria. Os elementos com data-categoria recebem --cor. */
+[data-categoria="alimento"] {
+  --cor: #f08a4b;
+}
+[data-categoria="transporte"] {
+  --cor: #4c9be8;
+}
+[data-categoria="lazer"] {
+  --cor: #a883f0;
+}
+[data-categoria="saúde"] {
+  --cor: #3dbe8f;
+}
+[data-categoria="outros"] {
+  --cor: #9aa7ae;
+}
+
+/* ------------------------------------------------------------------------
+   Estrutura da página
+   ------------------------------------------------------------------------ */
+
+.app {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100vh;
+}
+
+.conteudo {
+  width: 100%;
+  max-width: 44rem;
+  padding: 2.5rem 2rem 4rem;
+  margin-inline: auto;
+}
+
+/* ------------------------------------------------------------------------
+   Barra lateral (resumo)
+   ------------------------------------------------------------------------ */
+
+.resumo {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  padding: 2.5rem 1.75rem;
+  overflow-y: auto;
+  background: var(--lateral);
+  color: var(--lateral-texto);
+}
+
+.resumo__marca {
+  margin-bottom: 3rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.resumo__rotulo {
+  color: var(--lateral-suave);
+  font-size: 0.9375rem;
+}
+
+.resumo__total {
+  margin-top: 0.25rem;
+  font-size: 2.75rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+
+.barra {
+  display: flex;
+  height: 0.625rem;
+  margin: 1.5rem 0 2rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--lateral-linha);
+}
+
+.barra__segmento {
+  height: 100%;
+  background: var(--cor);
+  transition: width 0.3s ease;
+}
+
+.barra__segmento + .barra__segmento {
+  margin-left: 2px;
+}
+
+.categoria {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--lateral-linha);
+}
+
+.categoria__marcador {
+  width: 0.625rem;
+  height: 0.625rem;
+  border-radius: 50%;
+  background: var(--cor);
+}
+
+.categoria__valor {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------------
+   Card: nova despesa
+   ------------------------------------------------------------------------ */
+
+.cartao {
+  padding: 1.5rem;
+  border: 1px solid var(--linha);
+  border-radius: 0.75rem;
+  background: var(--superficie);
+}
+
+.cartao__titulo,
+.lista__titulo {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.formulario {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+}
+
+.campo--titulo {
+  grid-column: 1 / -1;
+}
+
+.campo label {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.campo input,
+.campo select {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--linha);
+  border-radius: 0.5rem;
+  background: var(--superficie);
+  color: var(--texto);
+  font: inherit;
+}
+
+.campo input::placeholder {
+  color: #93a0a8;
+}
+
+.botao {
+  grid-column: 1 / -1;
+  min-height: 2.75rem;
+  padding: 0.5rem 1.25rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: var(--lateral);
+  color: var(--lateral-texto);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background: #1b4a58;
+}
+
+.formulario__erro {
+  grid-column: 1 / -1;
+  min-height: 1.5rem;
+  margin-top: -0.25rem;
+  color: #b3261e;
+  font-size: 0.9375rem;
+}
+
+.formulario__erro:empty {
+  display: none;
+}
+
+.campo input:focus-visible,
+.campo select:focus-visible,
+.botao:focus-visible {
+  outline: 3px solid var(--foco);
+  outline-offset: 2px;
+}
+
+/* ------------------------------------------------------------------------
+   Lista de despesas
+   ------------------------------------------------------------------------ */
+
+.lista {
+  margin-top: 2.5rem;
+}
+
+.lista__vazia {
+  margin-top: 1rem;
+  color: var(--texto-suave);
+}
+
+.lista__itens {
+  margin-top: 0.75rem;
+}
+
+.despesa {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 0 0.875rem 1rem;
+  border-top: 1px solid var(--linha);
+  border-left: 4px solid var(--cor);
+}
+
+.despesa__texto {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.despesa__titulo {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.despesa__categoria {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+}
+
+.despesa__valor {
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ------------------------------------------------------------------------
+   Telas pequenas
+   ------------------------------------------------------------------------ */
+
+@media (max-width: 860px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .resumo {
+    position: static;
+    height: auto;
+    padding: 1.5rem 1.25rem;
+  }
+
+  .resumo__marca {
+    margin-bottom: 1.5rem;
+  }
+
+  .resumo__total {
+    font-size: 2.25rem;
+  }
+
+  .conteudo {
+    padding: 1.5rem 1.25rem 3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .formulario {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .barra__segmento {
+    transition: none;
+  }
+}

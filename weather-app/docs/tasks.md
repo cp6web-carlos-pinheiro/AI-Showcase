@@ -36,7 +36,7 @@ Os casos de teste detalhados estão no **PRD seção 11.4**; as tarefas dizem *q
 
 ## Fase 1 — Fundação
 
-### [ ] T01 — Adotar o projeto inicial e adequá-lo ao PRD
+### [x] T01 — Adotar o projeto inicial e adequá-lo ao PRD
 **Referência:** PRD 4.1, 4.2 e 9 (item 3)
 **O que fazer:** Partir do projeto `weather-app-web` (Vite 8 + TypeScript 6, template `vanilla-ts`, já com `package.json`, `tsconfig.json`, `index.html` e `src/main.ts`). Não recriar o projeto. Ajustar:
 - `tsconfig.json`: acrescentar `"strict": true`, mantendo as opções existentes (`noUnusedLocals`, `verbatimModuleSyntax`, `erasableSyntaxOnly` etc.).
@@ -52,7 +52,9 @@ Os casos de teste detalhados estão no **PRD seção 11.4**; as tarefas dizem *q
 - `<html>` tem `lang="pt-BR"`.
 - Nenhum framework de UI foi instalado.
 
-### [ ] T02 — Validar `precipitation_probability` em `current` (spike) e capturar fixtures
+Observação: base do app limpa e funcionando em Vite 8; `npm run dev` iniciou com sucesso em `localhost:5174` (5173 ocupado).
+
+### [x] T02 — Validar `precipitation_probability` em `current` (spike) e capturar fixtures
 **Referência:** PRD 5.1, 5.2, 5.3, 9 (item 1) e 11.3
 **O que fazer:** Fazer chamadas reais ao Geocoding (`name=Rio de Janeiro`) e ao Forecast com a URL do PRD 5.2 (coordenadas e timezone devolvidos pelo Geocoding) e verificar se `current.precipitation_probability` vem na resposta. Salvar as duas respostas reais, sem alterar o conteúdo (só formatação), em `src/test/fixtures/geocoding-rio.json` e `src/test/fixtures/forecast-rio.json`. Não escrever código do app nesta tarefa.
 **Critério de aprovação:**
@@ -61,9 +63,9 @@ Os casos de teste detalhados estão no **PRD seção 11.4**; as tarefas dizem *q
 - **Se o campo vier:** nada muda, siga para a T03.
 - **Se o campo NÃO vier:** a tarefa fica **bloqueada** e o usuário é consultado (buscar em `hourly` ou tornar o campo opcional) antes de qualquer outra tarefa. A decisão deve ser refletida no `prd.md` (incluindo os casos de teste da seção 11.4) antes de continuar.
 
-> Nota de resultado: _(preencher)_
+> Nota de resultado: o campo `current.precipitation_probability` está presente na resposta real do Open-Meteo para Rio de Janeiro, com valor `61` e unidade `%`. Os JSONs das fixtures foram salvos em `src/test/fixtures/geocoding-rio.json` e `src/test/fixtures/forecast-rio.json`.
 
-### [ ] T03 — Infraestrutura de testes unitários (Vitest + jsdom)
+### [x] T03 — Infraestrutura de testes unitários (Vitest + jsdom)
 **Referência:** PRD 3 (Testabilidade), 4.1, 9 (item 4), 11.1, 11.2 e 11.3
 **O que fazer:**
 - Instalar como `devDependencies`: `vitest`, `jsdom` e `@vitest/coverage-v8`. Antes, conferir os `peerDependencies` do Vitest escolhido contra o Vite 8 instalado.
@@ -78,7 +80,9 @@ Os casos de teste detalhados estão no **PRD seção 11.4**; as tarefas dizem *q
 - As fixtures da T02 podem ser importadas com tipos (`import x from '.../forecast-rio.json'`) sem erro de `tsc`.
 - `npm run test:coverage` gera o relatório sem erros.
 
-### [ ] T04 — Definir os tipos
+Observação: `vitest@^5.0.3` foi escolhido porque sua peerDependency aceita `vite ^8.0.0`; o helper cobre JSON, status, rede, inválido, abort, deferred e registro de chamadas.
+
+### [x] T04 — Definir os tipos
 **Referência:** PRD 5.1, 5.2 e 5.4
 **O que fazer:** Criar em `src/types/openMeteo.ts` os tipos do modelo interno (`City`, `CurrentWeather`) e os tipos das respostas brutas da API (geocoding e forecast) usados para validar o JSON recebido.
 **Testes:** Criar `src/types/openMeteo.test.ts` que atribui as fixtures da T02 às respostas brutas tipadas (a verificação é de tipo, feita pelo `tsc`) e que monta um `City` e um `CurrentWeather` de exemplo com todos os campos.
@@ -87,6 +91,8 @@ Os casos de teste detalhados estão no **PRD seção 11.4**; as tarefas dizem *q
 - Há tipos para as respostas brutas (`results[0]` do geocoding; `current` e `current_units` do forecast).
 - As fixtures reais são atribuíveis aos tipos brutos sem `as`/`any`.
 - `npm run build` e `npm test` sem erros.
+
+Observação: os tipos foram validados com `resolveJsonModule` e as fixtures reais são atribuídas diretamente aos contratos da API sem `as`/`any`.
 
 ---
 

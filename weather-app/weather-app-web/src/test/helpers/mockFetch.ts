@@ -89,12 +89,13 @@ export function mockFetch(routes: MockFetchRoute[] = []): MockFetchResult {
       }
 
       const abortHandler = () => {
+        clearTimeout(timerId);
         reject(new DOMException('The operation was aborted', 'AbortError'));
       };
 
       signal?.addEventListener('abort', abortHandler, { once: true });
 
-      setTimeout(() => {
+      const timerId = setTimeout(() => {
         signal?.removeEventListener('abort', abortHandler);
         try {
           const payload = route.response;

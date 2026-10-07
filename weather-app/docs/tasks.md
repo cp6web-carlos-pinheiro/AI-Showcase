@@ -191,7 +191,7 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 
 ## Fase 4 — Interface
 
-### [ ] T12 — Estrutura HTML e layout base
+### [x] T12 — Estrutura HTML e layout base
 **Referência:** PRD 7.1 e 11.3 (ganchos)
 **O que fazer:** Montar o `index.html` e o CSS base (`src/styles/main.css`, importado pelo `main.ts`) com variáveis CSS: fundo cinza escuro, área superior centralizada e container do card (ainda sem conteúdo real). Aplicar os `data-testid` `card`, `sidebar` e `main-area` (PRD 11.3).
 **Testes:** Criar um teste em jsdom (ex.: em `src/main.test.ts`) que carrega `index.html` com `?raw` e confere `lang="pt-BR"`, a existência de `card` contendo `sidebar` e `main-area`, e que o markup não contém restos do template. O visual (cores, 800 px, centralização) é verificado no E2E da T21; aqui, conferir manualmente no navegador.
@@ -203,7 +203,7 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 - `lang="pt-BR"` no `<html>`.
 - O teste de estrutura passa; `npm run build` e `npm test` sem erros.
 
-### [ ] T13 — Campo de busca e botão
+### [x] T13 — Campo de busca e botão
 **Referência:** PRD RF-01, 3 (Acessibilidade), 7.1 e 11.4 (`searchForm`)
 **O que fazer:** Implementar em `src/ui/searchForm.ts` o formulário de busca (`<form>` com `label` + campo + botão `type="submit"`, ganchos `search-form`, `search-input`, `search-button`) e o evento de envio, ainda sem chamar a API: apenas entrega o texto com `trim` para um callback. Expor `setDisabled(boolean)` para campo e botão.
 **Testes:** Criar `src/ui/searchForm.test.ts` com todos os casos da tabela `searchForm` do PRD 11.4. Em jsdom, Enter nativo não é simulável: o teste confere que é um `<form>` com botão de submit e usa `requestSubmit()`; o Enter real é testado no E2E (T21).
@@ -216,7 +216,7 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 - A área superior continua contendo **apenas** campo e botão.
 - Os testes da tabela `searchForm` passam; `npm run build` e `npm test` sem erros.
 
-### [ ] T14 — Estados: Empty State e Loading
+### [x] T14 — Estados: Empty State e Loading
 **Referência:** PRD RF-04, 7.6, 11.3 (ganchos) e 11.4 (`render`)
 **O que fazer:** Implementar em `src/ui/render.ts` a renderização dos estados `empty-inicial`, `empty-nao-encontrado` e `loading`, e uma função para alternar entre eles (e o futuro `resultado`). O `card` expõe `data-state` com o nome do estado, e a região `status-region` (`aria-live="polite"`) recebe o texto do estado atual. Estados inativos ficam fora do DOM ou com `hidden`.
 **Testes:** Criar `src/ui/render.test.ts` com os casos de estados da tabela `render` do PRD 11.4: alternância correta de `data-state`, apenas um estado visível por vez, mensagens distintas nos dois empty states, `status-region` anunciando o loading, e `setDisabled` do formulário acionado ao entrar e sair do loading.
@@ -227,7 +227,7 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 - Apenas um estado é visível por vez.
 - Os testes de estados passam; `npm run build` e `npm test` sem erros.
 
-### [ ] T15 — Render do resultado: sidebar (conteúdo)
+### [x] T15 — Render do resultado: sidebar (conteúdo)
 **Referência:** PRD RF-05, 3 (Segurança), 7.2, 7.4 e 11.4 (`render`)
 **O que fazer:** Renderizar a sidebar com os dados de `City` e `CurrentWeather` (use dados de exemplo para validar visualmente): temperatura, `Cidade, PAÍS`, dia atual, indicador dia/noite com ícone sol/lua e Weather Code com ícone SVG + descrição. Ganchos: `temperature`, `city`, `day`, `period`, `weather-description`. Textos vindos de `City` entram com `textContent` (ou escapados), nunca como HTML cru.
 **Testes:** Acrescentar em `render.test.ts` os casos da sidebar da tabela `render`: ordem dos 5 itens, `Rio de Janeiro, BR`, sol/`Dia` e lua/`Noite`, unidade vinda de `units` (com `°F`), weather code 0, 63 e 95, e o caso de segurança (cidade com `<img src=x onerror=alert(1)>` aparece como texto e não cria nenhum `img`).
@@ -240,7 +240,9 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 - Weather Code mostra ícone e descrição corretos para pelo menos três códigos diferentes testados (ex.: 0, 63, 95).
 - O caso de injeção de HTML passa; `npm run build` e `npm test` sem erros.
 
-### [ ] T16 — Visual da sidebar por dia/noite
+Observação: a sidebar foi validada com dados reais e com teste de injeção de HTML, e a suíte inteira ficou verde.
+
+### [x] T16 — Visual da sidebar por dia/noite
 **Referência:** PRD 7.2 (Visual por `is_day`) e 11.4 (Contraste)
 **O que fazer:** Aplicar `data-period="day|night"` na sidebar e criar os dois temas por variáveis CSS. Definir em `main.css` os tokens `--day-text`, `--day-bg-from`, `--day-bg-to`, `--night-text`, `--night-bg-from` e `--night-bg-to` (usados pelos gradientes e pelo teste de contraste).
 **Testes:** Criar `src/test/helpers/contrast.ts` (razão de contraste WCAG entre duas cores hex) com testes próprios (ex.: preto/branco = 21; cores iguais = 1) e `src/ui/contrast.test.ts`, que lê `main.css` com `?raw`, extrai os tokens e exige razão ≥ 4,5:1 entre o texto e **cada ponta** do gradiente, nos dois temas. Acrescentar em `render.test.ts` que `data-period` é `day`/`night` conforme `isDay`.
@@ -251,7 +253,9 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 - Trocar entre os dois temas não altera o layout.
 - `npm run build` e `npm test` sem erros.
 
-### [ ] T17 — Render do resultado: área principal
+Observação: o contraste foi validado pelos tokens do CSS e a leitura do arquivo foi ajustada para o ambiente Vitest/Node.
+
+### [x] T17 — Render do resultado: área principal
 **Referência:** PRD RF-05, 7.3, 7.4 e 11.4 (`render`)
 **O que fazer:** Renderizar os 4 blocos da área principal (umidade relativa, temperatura aparente, probabilidade de precipitação, vento) em grade 2×2. Ganchos: `humidity`, `apparent-temperature`, `precipitation-probability`, `wind`.
 **Testes:** Acrescentar em `render.test.ts` os casos da área principal: 4 blocos com rótulo, valor e unidade; `%` em umidade e probabilidade; formato `5,8 km/h · 277° (O)` no vento; unidades vindas de `units` (testar com unidades alteradas); `precipitation` (mm) ausente.
@@ -261,6 +265,8 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 - Vento exibe velocidade, unidade, graus e ponto cardeal (ex.: `5,8 km/h · 277° (O)`).
 - `precipitation` (mm) **não** é exibida.
 - Os testes da área principal passam; `npm run build` e `npm test` sem erros.
+
+Observação: a área principal ficou com a grade de 2x2 e o contrato dos dados de resultado validado pela suíte.
 
 ---
 

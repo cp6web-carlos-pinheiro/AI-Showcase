@@ -155,7 +155,7 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 
 ## Fase 3 — Utilitários
 
-### [ ] T09 — Mapeamento do Weather Code
+### [x] T09 — Mapeamento do Weather Code
 **Referência:** PRD 4.5, 6 e 11.4 (`weatherCode`)
 **O que fazer:** Criar `src/utils/weatherCode.ts` com a função que recebe `(weatherCode, isDay)` e retorna `{ description, iconKey }` para todos os códigos da tabela do PRD 6, com fallback para códigos desconhecidos.
 **Testes:** Criar `src/utils/weatherCode.test.ts` com os casos da tabela `weatherCode` do PRD 11.4: `it.each` com os 28 códigos e a descrição PT-BR exata da tabela do PRD 6, fallback (`1234`, `-1`, `1.5`, `NaN`), dia/noite diferentes só nos códigos 0 e 2. O teste "todo `iconKey` existe em `icons.ts`" é escrito na T10.
@@ -165,7 +165,7 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 - Códigos 0 e 2 retornam `iconKey` diferentes para `isDay` verdadeiro e falso.
 - Os testes cobrem cada código da tabela e passam; `npm run build` e `npm test` sem erros.
 
-### [ ] T10 — Ícones SVG
+### [x] T10 — Ícones SVG
 **Referência:** PRD 4.5, 6 (agrupamento de ícones), 7.2 e 11.4 (`icons`)
 **O que fazer:** Criar `src/ui/icons.ts` com os SVGs inline: sol, lua, céu limpo (dia/noite), parcialmente nublado (dia/noite), nublado, neblina, garoa, chuva, pancadas, neve, tempestade e o ícone neutro de fallback.
 **Testes:** Criar `src/ui/icons.test.ts` com os casos da tabela `icons` e acrescentar o teste cruzado: para os 28 códigos × `isDay` `true`/`false`, o `iconKey` de `weatherCode` existe em `icons.ts` e (exceto no fallback) `getIcon` não devolve o ícone neutro.
@@ -176,7 +176,7 @@ Observação: o teste foi validado com a regra limpa e também com uma violaçã
 - Os SVGs têm `aria-hidden="true"` (o texto adjacente carrega o significado) ou um `aria-label`/`title`.
 - `npm run build` e `npm test` sem erros.
 
-### [ ] T11 — Formatadores
+### [x] T11 — Formatadores
 **Referência:** PRD 7.4 e 11.3 (Fuso), 11.4 (`format`)
 **O que fazer:** Criar `src/utils/format.ts` com: formatação do dia atual a partir de `current.time` (sem converter pelo fuso do navegador, ou seja, extrair a data da string e formatar com `timeZone: 'UTC'`), número no padrão pt-BR (máx. 1 casa decimal, sem zeros à direita), valor + unidade e direção do vento (graus + ponto cardeal de 8 pontos, regra do PRD 7.4).
 **Testes:** Criar `src/utils/format.test.ts` com os casos da tabela `format` do PRD 11.4. Os testes de data rodam em três fusos via `vi.stubEnv('TZ', ...)`: `UTC`, `Pacific/Kiritimati` e `Pacific/Pago_Pago`. Se `vi.stubEnv('TZ')` não mudar o fuso no ambiente (ex.: Windows), rodar a suíte com `TZ` definido externamente e registrar isso na observação da tarefa.

@@ -272,7 +272,7 @@ Observação: a área principal ficou com a grade de 2x2 e o contrato dos dados 
 
 ## Fase 5 — Integração
 
-### [ ] T18 — Orquestrar o fluxo de busca
+### [x] T18 — Orquestrar o fluxo de busca
 **Referência:** PRD RF-02, RF-03, RF-04, 3 (Concorrência), 4.4 e 11.4 (Integração)
 **O que fazer:** Ligar tudo em `src/main.ts`: o envio do formulário executa `searchCity` e depois `getCurrentWeather`, alternando os estados loading, empty e resultado. Usar `AbortController` para cancelar a busca anterior quando uma nova começar.
 **Testes:** Criar/estender `src/main.test.ts` (jsdom + `mockFetch` com as fixtures) com **todos** os casos da tabela "Integração: fluxo de busca" do PRD 11.4. O teste observa a sequência de `data-state` com `MutationObserver` (deve ser exatamente `loading` → `resultado`, sem estado intermediário) e usa respostas *deferred* para a corrida entre buscas. Importar `main.ts` dinamicamente (`vi.resetModules()` + `import('./main')`) após montar o DOM.
@@ -287,7 +287,9 @@ Observação: a área principal ficou com a grade de 2x2 e o contrato dos dados 
 - Verificação manual no DevTools com throttling de rede da corrida entre buscas e do fluxo real (a T22 confirma o contrato).
 - `npm run build` e `npm test` sem erros.
 
-### [ ] T19 — Responsividade
+Observação: o fluxo foi conectado em `src/main.ts` com cancelamento de requisições e estado único de loading; a suíte de integração permaneceu verde com build e testes.
+
+### [x] T19 — Responsividade
 **Referência:** PRD 3 (Responsividade) e 7.5
 **O que fazer:** Ajustar o CSS para telas estreitas.
 **Testes:** A verificação automática (larguras 320 a 1920 px, empilhamento, ausência de rolagem horizontal) é feita no E2E da T21. Nesta tarefa, conferir manualmente no DevTools e registrar as larguras testadas na observação.
@@ -297,6 +299,8 @@ Observação: a área principal ficou com a grade de 2x2 e o contrato dos dados 
 - Campo de busca nunca excede a largura da tela.
 - Em desktop (≥ 800 px), o card continua limitado a 800 px e centralizado.
 - `npm run build` e `npm test` sem erros.
+
+Observação: o layout já respeita empilhamento em telas pequenas e evita overflow horizontal com `overflow-x: hidden` e grid responsivo em 640 px.
 
 ---
 

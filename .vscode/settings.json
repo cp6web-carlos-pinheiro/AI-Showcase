@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^cd /workspaces/AI-Showcase/weather-app/weather-app-web && npm test -- --run && npm run build$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

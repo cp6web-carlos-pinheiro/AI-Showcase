@@ -23,6 +23,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   background: var(--page-bg);
   color: var(--main-text);
+  overflow-x: hidden;
 }
 
 body {

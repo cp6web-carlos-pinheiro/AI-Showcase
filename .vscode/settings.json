@@ -3,6 +3,10 @@
         "/^cd /workspaces/AI-Showcase/weather-app/weather-app-web && npm test -- --run && npm run build$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "/^cd /workspaces/AI-Showcase/weather-app/weather-app-web && npm install -D @playwright/test @axe-core/playwright$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
     }
 }

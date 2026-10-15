@@ -7,6 +7,11 @@
         "/^cd /workspaces/AI-Showcase/weather-app/weather-app-web && npm install -D @playwright/test @axe-core/playwright$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "npm run build": true,
+        "/^cd /workspaces/AI-Showcase/weather-app/weather-app-web && npm run test:e2e -- --grep 'limpa os dados antigos e mostra somente a mensagem\\|smoke: empty state inicial e busca bem sucedida'$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
     }
 }

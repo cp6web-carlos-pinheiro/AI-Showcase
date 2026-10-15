@@ -10,7 +10,8 @@
   --night-bg-from: #0f172a;
   --night-bg-to: #1d4ed8;
   --main-text: #111827;
-  --button-bg: #0f172a;
+  --button-bg: #2563eb;
+  --button-hover-bg: #1d4ed8;
 }
 
 * {
@@ -98,6 +99,7 @@ body {
 }
 
 .search-form button:hover:not(:disabled) {
+  background: var(--button-hover-bg);
   transform: translateY(-1px);
   box-shadow: 0 8px 20px rgba(31, 41, 55, 0.2);
 }
@@ -130,6 +132,10 @@ body {
   grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
   overflow: hidden;
   position: relative;
+}
+
+.card > [hidden] {
+  display: none;
 }
 
 .status-region {
@@ -170,12 +176,31 @@ body {
 }
 
 .sidebar {
+  position: relative;
+  isolation: isolate;
   padding: 28px 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;
   background: linear-gradient(180deg, var(--day-bg-from), var(--day-bg-to));
   color: var(--day-text);
+}
+
+.weather-backdrop {
+  position: absolute;
+  z-index: -1;
+  right: -30px;
+  bottom: -34px;
+  width: 200px;
+  height: 200px;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.weather-backdrop svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .sidebar[data-period='day'] {

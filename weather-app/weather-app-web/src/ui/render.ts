@@ -87,7 +87,12 @@ export function renderWeatherResult(card: HTMLElement, city: City, weather: Curr
   descriptionText.textContent = description.description;
   descriptionWrap.append(descriptionIcon, descriptionText);
 
-  sidebar.append(temperature, cityName, day, period, descriptionWrap);
+  const weatherBackdrop = document.createElement('span');
+  weatherBackdrop.className = 'weather-backdrop';
+  weatherBackdrop.setAttribute('aria-hidden', 'true');
+  weatherBackdrop.innerHTML = getIcon(description.iconKey);
+
+  sidebar.append(weatherBackdrop, temperature, cityName, day, period, descriptionWrap);
 
   mainArea.innerHTML = '';
   const grid = document.createElement('div');
@@ -120,7 +125,7 @@ export function createRender(card: HTMLElement, controls?: RenderControls): Rend
     'empty-inicial': 'Busque por uma cidade para ver o clima.',
     'empty-nao-encontrado': 'Não encontramos informações para essa busca.',
     loading: 'Carregando clima...',
-    resultado: 'Resultado carregado.',
+    resultado: '',
   };
 
   Object.entries(stateMap).forEach(([key, element]) => {
@@ -139,9 +144,28 @@ export function createRender(card: HTMLElement, controls?: RenderControls): Rend
     card.dataset.state = state;
     statusRegion.textContent = message;
 
+    const showingResult = state === 'resultado';
+    const sidebar = card.querySelector<HTMLElement>('[data-testid="sidebar"]');
+    const mainArea = card.querySelector<HTMLElement>('[data-testid="main-area"]');
+
+    if (sidebar) {
+      sidebar.hidden = !showingResult;
+      if (!showingResult) {
+        sidebar.innerHTML = '';
+        delete sidebar.dataset.period;
+      }
+    }
+
+    if (mainArea) {
+      mainArea.hidden = !showingResult;
+      if (!showingResult) {
+        mainArea.innerHTML = '';
+      }
+    }
+
     Object.entries(stateMap).forEach(([key, element]) => {
       const stateKey = key as RenderState;
-      element.hidden = stateKey !== state;
+      element.hidden = stateKey === 'resultado' || stateKey !== state;
     });
 
     if (controls) {

@@ -119,6 +119,42 @@ test.describe('E2E - fluxo de busca', () => {
     await expect(page.getByTestId('main-area')).toContainText('Umidade');
   });
 
+  test('limpa os dados antigos e mostra somente a mensagem quando a nova busca falha', async ({ page }) => {
+    await page.route('**/geocoding-api.open-meteo.com/v1/search**', async (route) => {
+      const cityName = new URL(route.request().url()).searchParams.get('name');
+      if (cityName === 'Cidade fantasma') {
+        await new Promise((resolve) => setTimeout(resolve, 300));
+        await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify({ results: [] }) });
+        return;
+      }
+
+      await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(geocodingFixture) });
+    });
+
+    await page.route('**/api.open-meteo.com/v1/forecast**', async (route) => {
+      await route.fulfill({ status: 200, contentType: 'application/json', body: JSON.stringify(forecastFixture) });
+    });
+
+    await page.goto('/');
+    await searchBy(page, 'Rio de Janeiro');
+    await expect(page.getByTestId('city')).toContainText('Rio de Janeiro, BR');
+
+    await searchBy(page, 'Cidade fantasma');
+
+    const loadingState = page.locator('.state-panel[data-state="loading"]');
+    const notFoundState = page.locator('.state-panel[data-state="empty-nao-encontrado"]');
+    await expect(loadingState).toBeVisible();
+    await expect(page.getByTestId('sidebar')).toBeHidden();
+    await expect(page.getByTestId('main-area')).toBeHidden();
+    await expect(page.getByTestId('city')).toHaveCount(0);
+
+    await expect(notFoundState).toBeVisible();
+    await expect(notFoundState).toContainText('Não encontramos informações para essa busca.');
+    await expect(loadingState).toBeHidden();
+    await expect(page.getByTestId('sidebar')).toBeHidden();
+    await expect(page.getByTestId('main-area')).toBeHidden();
+  });
+
   test('campo vazio não dispara requisição', async ({ page }) => {
     let totalGeocodingCalls = 0;
     let totalForecastCalls = 0;
@@ -216,6 +252,8 @@ test.describe('E2E - fluxo de busca', () => {
       await page.setViewportSize({ width, height: 900 });
       await page.reload();
       await searchBy(page, 'Rio de Janeiro', true);
+      await expect(page.getByTestId('sidebar')).toBeVisible();
+      await expect(page.getByTestId('main-area')).toBeVisible();
 
       const metrics = await page.evaluate(() => ({
         scrollWidth: document.documentElement.scrollWidth,

@@ -63,7 +63,7 @@ if (app) {
         }
 
         renderWeatherResult(card, city, weather);
-        renderController.setState('resultado', 'Resultado carregado.');
+        renderController.setState('resultado');
       } catch {
         if (currentRequestId !== requestId || controller.signal.aborted) {
           return;

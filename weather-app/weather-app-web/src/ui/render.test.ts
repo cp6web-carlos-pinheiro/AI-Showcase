@@ -40,12 +40,29 @@ describe('RF-04: render', () => {
     expect(setDisabled).toHaveBeenLastCalledWith(false);
   });
 
+  it('mostra apenas os resultados após uma busca bem-sucedida', () => {
+    const render = createRender(card, { setDisabled });
+    const statusRegion = card.querySelector('[aria-live="polite"]');
+    const successPanel = card.querySelector<HTMLElement>('[data-state="resultado"]');
+
+    render.setState('loading', 'Buscando clima...');
+    expect((card.querySelector('[data-state="loading"]') as HTMLElement | null)?.hidden).toBe(false);
+
+    render.setState('resultado');
+
+    expect(card.dataset.state).toBe('resultado');
+    expect(statusRegion?.textContent).toBe('');
+    expect(successPanel?.hidden).toBe(true);
+  });
+
   it('renderiza a sidebar e o conteúdo principal com dados reais', () => {
     const sidebar = document.createElement('aside');
     sidebar.setAttribute('data-testid', 'sidebar');
     const mainArea = document.createElement('section');
     mainArea.setAttribute('data-testid', 'main-area');
     card.append(sidebar, mainArea);
+
+    const render = createRender(card, { setDisabled });
 
     renderWeatherResult(card, {
       name: '<img src=x onerror=alert(1)>',
@@ -81,10 +98,23 @@ describe('RF-04: render', () => {
     expect(sidebar.querySelector('[data-testid="day"]')?.textContent).toContain('quarta-feira');
     expect(sidebar.querySelector('[data-testid="period"]')?.textContent).toContain('Dia');
     expect(sidebar.querySelector('[data-testid="weather-description"]')?.textContent).toContain('Céu limpo');
+    expect(sidebar.querySelector('.weather-backdrop svg')).not.toBeNull();
+    expect(sidebar.querySelector('.weather-backdrop')?.getAttribute('aria-hidden')).toBe('true');
 
     expect(mainArea.querySelector('[data-testid="humidity"]')?.textContent).toContain('68');
     expect(mainArea.querySelector('[data-testid="apparent-temperature"]')?.textContent).toContain('18,7');
     expect(mainArea.querySelector('[data-testid="precipitation-probability"]')?.textContent).toContain('32');
     expect(mainArea.querySelector('[data-testid="wind"]')?.textContent).toContain('5,8 km/h · 277° (O)');
+
+    render.setState('resultado');
+    expect(sidebar.hidden).toBe(false);
+    expect(mainArea.hidden).toBe(false);
+
+    render.setState('empty-nao-encontrado');
+    expect(sidebar.hidden).toBe(true);
+    expect(mainArea.hidden).toBe(true);
+    expect(sidebar.childElementCount).toBe(0);
+    expect(mainArea.childElementCount).toBe(0);
+    expect(card.querySelector('[aria-live="polite"]')?.textContent).toBe('Não encontramos informações para essa busca.');
   });
 });

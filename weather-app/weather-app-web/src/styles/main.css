@@ -62,7 +62,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  width: min(100%, 560px);
+  width: min(100%, 800px);
   min-height: 58px;
 }
 
